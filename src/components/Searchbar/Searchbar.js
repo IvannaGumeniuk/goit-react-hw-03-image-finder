@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import React, { Component } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import styles from "./Searchbar.module.css";
