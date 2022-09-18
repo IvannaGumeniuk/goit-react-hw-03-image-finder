@@ -63,7 +63,7 @@ class App extends Component {
   }
   
   onApiError = () => {
-    Notiflix.Notify.warning('MSorry, there are no images matching your search query. Please try again');
+    Notiflix.Notify.failure('MSorry, there are no images matching your search query. Please try again');
     this.setState({ showLoadMore: false, loading: false });
   };
 
