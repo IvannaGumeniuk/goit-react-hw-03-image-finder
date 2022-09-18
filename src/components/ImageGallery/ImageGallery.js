@@ -1,28 +1,29 @@
-import { Component } from "react";
+import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import styles from "./ImageGallery.module.css";
+import PropTypes from 'prop-types';
 
-export default class ImageGallery extends Component {
-    state = {
-        image: null,
-    };
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.searchKey !== this.props.searchKey) {
-
-            fetch(`https://pixabay.com/api/?q=${this.props.searchKey}&page=1&key=28537959-b0bbf2c2513809284b91fef7c&image_type=photo&orientation=horizontal&per_page=12`)
-                .then(res => res.json())
-                .then(image => this.setState({ image }));
-        }
-
-    }
-
-    
-
-    render() {
-        return (
-        <div>
-            {this.state.image &&
-            <div>
-                {this.state.image.hits.webformatURL}</div>}   
-        </div>
-        )
-    }
+export default function ImageGallery({ params, openModal }) {
+    return (
+        <ul id='ImageGallery' className={styles.ImageGallery}>
+            {params.map(({ id, webformatURL, largeImageURL, tags }) => (
+                <ImageGalleryItem
+                    key={id}
+                    webformatURL={webformatURL}
+                    alt={tags}
+                    onOpen={() => openModal(largeImageURL, tags)}
+                />
+            ))}
+        </ul>
+    );
 }
+ImageGallery.propTypes = {
+    params: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            webformatURL: PropTypes.string,
+            largeImageURL: PropTypes.string,
+            tags: PropTypes.string,
+        })
+    ),
+    openModal: PropTypes.func.isRequired,
+};
